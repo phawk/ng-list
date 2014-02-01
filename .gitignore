@@ -1,0 +1,11 @@
+# Third party libraries
+node_modules/
+
+# bad.
+.DS_Store
+*.swp
+tmp/
+.sass-cache/
+
+# wild
+todo.md
