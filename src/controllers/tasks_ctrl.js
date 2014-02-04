@@ -29,8 +29,14 @@
 
             task.update({ 'completed': complete });
             task.json.completed = complete;
+        };
 
-            return true;
+        $scope.removeTask = function($event, task) {
+            $event.preventDefault();
+
+            $scope.tasks = _.without($scope.tasks, task);
+
+            task.deleteRecord();
         };
 
         datastore.then(function(ds){

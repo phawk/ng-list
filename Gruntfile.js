@@ -71,6 +71,7 @@ module.exports = function(grunt) {
                 trailing: true, // Prohibits trailing whitespace
 
                 globals: {
+                    _: true,
                     App: true,
                     angular: true
                 }

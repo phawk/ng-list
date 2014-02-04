@@ -19,8 +19,9 @@
     <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
 
     <!-- JavaScripts -->
+    <script src="//underscorejs.org/underscore-min.js"></script>
     <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script src="assets/javascripts/built.js"></script>
 
     <!-- IE Fallbacks -->
@@ -50,6 +51,7 @@
                     <input type="checkbox" ng-model="task.json.completed" ng-click="markTask(task)">
                     {{task.json.name}}
                 </label>
+                <a href="#" ng-click="removeTask($event, task)" ng-show="task.json.completed">Remove</a>
             </li>
         </ul>
 
