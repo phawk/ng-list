@@ -1,6 +1,9 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
+    var WEB_SERVER_PORT = 8000,
+        LIVERELOAD_PORT = 35729;
+
     // Project configuration.
     grunt.initConfig({
 
@@ -15,18 +18,27 @@ module.exports = function(grunt) {
         *  whenever you edit the source files or tests.
         */
         watch: {
+            markup: {
+                files: ['index.html'],
+                tasks: [],
+                options: {
+                    livereload: LIVERELOAD_PORT
+                }
+            },
             scripts: {
-                files: ['src/**/*.js'],
+                files: ['Gruntfile.js', 'src/**/*.js'],
                 tasks: ['build'],
                 options: {
-                    interrupt: true
+                    interrupt: true,
+                    livereload: LIVERELOAD_PORT
                 }
             },
             styles: {
                 files: ['src/sass/**/*.scss'],
                 tasks: ['styles'],
                 options: {
-                    interrupt: true
+                    interrupt: true,
+                    livereload: LIVERELOAD_PORT
                 }
             }
         },
@@ -59,7 +71,8 @@ module.exports = function(grunt) {
                 trailing: true, // Prohibits trailing whitespace
 
                 globals: {
-                    app: true
+                    App: true,
+                    angular: true
                 }
             }
         },
@@ -95,6 +108,25 @@ module.exports = function(grunt) {
                 src: ['src/app.js', 'src/directives/*.js', 'src/services/*.js', 'src/controllers/*.js'],
                 dest: 'assets/javascripts/built.js',
             }
+        },
+
+        /**
+         *  Server
+         *  ======
+         *
+         *  Runs a local web server
+         */
+        connect: {
+            server: {
+                options: {
+                    port: WEB_SERVER_PORT,
+                    base: '.',
+                    livereload: LIVERELOAD_PORT,
+                    open: {
+                        target: 'http://localhost:'+ WEB_SERVER_PORT
+                    }
+                }
+            }
         }
 
     });
@@ -104,11 +136,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     // Define tasks
     grunt.registerTask('test', ['jshint']);
     grunt.registerTask('styles', ['sass']);
     grunt.registerTask('build', ['test', 'concat', 'styles']);
+    grunt.registerTask('dev', ['connect', 'watch']);
     grunt.registerTask('default', 'build');
 
 };

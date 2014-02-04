@@ -1,3 +1,17 @@
 body {
+    font-family: Helvetica;
     margin: 50px;
+    color: #333;
+}
+
+.task-list {
+    label {
+        cursor: pointer;
+    }
+    .completed {
+        & > label {
+            color: #ccc;
+            text-decoration: line-through;
+        }
+    }
 }

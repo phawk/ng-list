@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en" ng-app="ngList">
 <head>
     <!-- Title &amp; Meta -->
     <title>ng-phawk-list</title>
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="author" content="Author">
-    <meta name="description" content="Description">
+    <meta name="author" content="@peteyhawkins">
+    <meta name="description" content="A sample angular dropbox app">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/stylesheets/styles.css">
@@ -23,8 +20,7 @@
 
     <!-- JavaScripts -->
     <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="vendor/javascripts/dropstore-ng.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script src="assets/javascripts/built.js"></script>
 
     <!-- IE Fallbacks -->
@@ -34,7 +30,33 @@
 
 </head>
 
-<body>
+<body ng-controller="AppCtrl">
+
+    <header>
+        <h1>ng-list</h1>
+
+        <menu class="signed-out-menu" ng-hide="authed">
+            <a href="#" ng-click="signIn($event)">Sign in with Dropbox</a>
+        </menu>
+        <menu class="signed-in-menu" ng-show="authed">
+            Welcome {{user.display_name}}! <a href="#" ng-click="signOut($event)">Sign out</a>
+        </menu>
+    </header>
+
+    <section ng-controller="TasksCtrl" ng-show="authed">
+        <ul class="task-list">
+            <li ng-repeat="task in tasks" ng-class="{completed: task.json.completed}">
+                <label>
+                    <input type="checkbox" ng-model="task.json.completed" ng-click="markTask(task)">
+                    {{task.json.name}}
+                </label>
+            </li>
+        </ul>
+
+        <form ng-submit="createTask(new_task)">
+            <input type="text" name="task_name" ng-model="new_task.name" placeholder="I want to...">
+        </form>
+    </section>
 
 </body>
 </html>
