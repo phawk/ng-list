@@ -8,4 +8,5 @@ tmp/
 .sass-cache/
 
 # wild
-todo.md
+assets/**/*.js
+assets/**/*.css
